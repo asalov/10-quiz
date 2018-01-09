@@ -1,50 +1,76 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+    <div class="post">
+        <div class="loading" v-if="loading">
+        Loading...
+        </div>
+
+        <div v-if="error" class="error">
+        {{ error }}
+        </div>
+
+        <div v-if="questions" class="content">
+            <h2>POST</h2>
+            <ul id="example-1">
+                <li v-for="question in questions">
+                    {{ question.question }}
+                </li>
+            </ul>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+    data() {
+        return {
+            loading: false,
+            questions: null,
+            error: null
+        };
+    },
+    created() {
+        // fetch the data when the view is created and the data is
+        // already being observed
+        this.fetchData();
+    },
+    watch: {
+        // call again the method if the route changes
+        $route: 'fetchData'
+    },
+    methods: {
+        fetchData() {
+            this.error = this.questions = null;
+            this.loading = true;
+            fetch(
+                'https://opentdb.com/api.php?amount=10&category=27&difficulty=easy'
+            )
+                .then(response => {
+                    return response.json();
+                })
+                .then(jsonRes => {
+                    this.loading = false;
+                    this.questions = jsonRes.results;
+                });
+        }
     }
-  }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+h1,
+h2 {
+    font-weight: normal;
 }
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 li {
-  display: inline-block;
-  margin: 0 10px;
+    display: inline-block;
+    margin: 0 10px;
 }
 a {
-  color: #42b983;
+    color: #42b983;
 }
 </style>
