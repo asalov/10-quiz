@@ -11,8 +11,8 @@
     <div v-if="questions" class="content">
       <h2>POST</h2>
       <ul id="example-1">
-        <li v-for="questionObj in questions">
-          {{ questionObj['question'] }}
+        <li v-for="(questionObj, index) in questions" :key="index">
+          {{ questionObj.question }}
         </li>
       </ul>
     </div>
@@ -28,14 +28,14 @@ export default {
       error: null
     };
   },
+  watch: {
+    // call again the method if the route changes
+    $route: 'fetchData'
+  },
   created() {
     // fetch the data when the view is created and the data is
     // already being observed
     this.fetchData();
-  },
-  watch: {
-    // call again the method if the route changes
-    $route: 'fetchData'
   },
   methods: {
     fetchData() {
