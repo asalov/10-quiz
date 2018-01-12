@@ -18,7 +18,7 @@ const fetchQuestions = next => {
     });
 };
 const beforeEnterGuard = (to, from, next) => {
-  if (storeEmpty) {
+  if (storeEmpty()) {
     fetchQuestions(next);
   } else {
     next();
@@ -35,6 +35,7 @@ export default new Router({
     },
     {
       path: '/question/:id',
+      name: 'Question',
       component: Question,
       props: true,
       beforeEnter: beforeEnterGuard

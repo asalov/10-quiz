@@ -4,7 +4,7 @@
       <h2>Questions</h2>
       <ul id="progress-bar">
         <li v-for="index in questionsLength" :key="index">
-          <span>{{ index }}</span>
+          <router-link :to="{ name: 'Question', params: { id: index }}">{{ index }}</router-link>
         </li>
       </ul>
     </div>

@@ -9,8 +9,8 @@ import store from '@/store';
 export default {
   props: {
     id: {
-      type: String,
-      default: '1'
+      type: Number | String,
+      default: 1
     }
   },
   data() {
@@ -18,10 +18,19 @@ export default {
       question: {}
     };
   },
-  created() {
-    this.question = store.returnQuestionByIdAction(this.id);
+  watch: {
+    id: function(newVal, oldVal) {
+      this.updateQuestion();
+    }
   },
-  methods: {}
+  created() {
+    this.updateQuestion();
+  },
+  methods: {
+    updateQuestion: function() {
+      this.question = store.returnQuestionByIdAction(this.id);
+    }
+  }
 };
 </script>
 
