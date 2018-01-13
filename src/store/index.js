@@ -7,7 +7,6 @@ const store = {
 };
 
 function setAnswers(questions) {
-  console.log(questions);
   store.state.questions = questions.map(item => {
     item.answers = item['incorrect_answers'];
     item.answers.push(item['correct_answer']);

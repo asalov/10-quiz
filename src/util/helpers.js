@@ -44,4 +44,13 @@ const shuffle = function(array) {
   return array;
 };
 
-export { storeEmpty, fetchQuestions, beforeEnterGuard, shuffle };
+const goToQuestion = function(idToGo) {
+  this.$router.push({
+    name: 'Question',
+    params: {
+      id: idToGo
+    }
+  });
+};
+
+export { storeEmpty, fetchQuestions, beforeEnterGuard, shuffle, goToQuestion };

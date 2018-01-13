@@ -23,7 +23,9 @@
 </template>
 
 <script>
-import { returnQuestionByIdAction } from '@/store';
+import { returnQuestionByIdAction, returnQuestionsLength } from '@/store';
+import { goToQuestion } from '@/util/helpers';
+
 export default {
   props: {
     id: {
@@ -42,6 +44,9 @@ export default {
     id: function() {
       this.updateQuestion();
       this.picked = null;
+      if (!+this.id || !returnQuestionsLength() > this.id) {
+        goToQuestion.call(this, 1);
+      }
     },
     picked: function(newVal) {
       if (newVal === null) {
@@ -49,16 +54,9 @@ export default {
       }
       this.correctGuess =
         this.question.answers[newVal] === this.question['correct_answer'];
-      setTimeout(
-        () =>
-          this.$router.push({
-            name: 'Question',
-            params: {
-              id: this.id + 1
-            }
-          }),
-        1000
-      );
+      if (returnQuestionsLength() > this.id) {
+        setTimeout(() => goToQuestion.call(this, this.id + 1), 1000);
+      }
     }
   },
   created() {
