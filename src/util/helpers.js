@@ -6,11 +6,11 @@ import {
 
 const storeEmpty = () => returnQuestionsLength() === 0;
 const fetchQuestions = () => {
-  return fetch('https://opentdb.com/api.php?amount=10&difficulty=easy').then(
-    response => {
+  return fetch('https://opentdb.com/api.php?amount=10&difficulty=easy')
+    .then(response => {
       return response.json();
-    }
-  );
+    })
+    .catch(() => Location.reload());
 };
 const beforeEnterGuard = (to, from, next) => {
   if (storeEmpty()) {
