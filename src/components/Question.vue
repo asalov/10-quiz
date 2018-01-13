@@ -15,15 +15,18 @@
         </li>
       </ul>
       <ul v-if="question.type === 'multiple'">
-        <li v-for="(answer, index) in question.answers" :key="index">
-          <input type="radio" :id="index" :value="index" v-model="picked">
-          <label :for="index" v-html="answer" />
+        <li class="button-wrap" v-for="(answer, index) in question.answers" :key="index">
+          <input
+            type="radio"
+            :id="index"
+            :class="{ 'correct': correctGuess, 'incorrect': !correctGuess }"
+            class="hidden"
+            :value="index"
+            v-model="picked">
+          <label :for="index" class="button-label" v-html="answer" />
         </li>
       </ul>
     </section>
-    <footer>
-      <p>Answer: {{ correctGuess }}</p>
-    </footer>
   </article>
 </template>
 
@@ -46,8 +49,12 @@ export default {
   watch: {
     id: function() {
       this.updateQuestion();
+      this.picked = null;
     },
     picked: function(newVal) {
+      if (newVal === null) {
+        return;
+      }
       this.correctGuess =
         this.question.answers[newVal] === this.question['correct_answer'];
     }
@@ -64,20 +71,86 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1,
-h2 {
-    font-weight: normal;
+<style lang="scss" scoped>
+$dark: #292929;
+$light: #efefef;
+$red: #d91e18;
+$green: #2ecc71;
+$blue: #4183d7;
+$font-stack: 'Lato', sans-serif;
+$small: 40em;
+
+.button-wrap {
+    position: relative;
+    text-align: center;
+    top: 50%;
+    margin-top: -2.5em;
+    @media (max-width: $small) {
+        margin-top: -1.5em;
+    }
 }
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-li {
+
+.button-label {
     display: inline-block;
-    margin: 0 10px;
+    padding: 1em 2em;
+    margin: 0.5em;
+    cursor: pointer;
+    color: $dark;
+    border-radius: 0.25em;
+    background: $light;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+    transition: 0.3s;
+    user-select: none;
+    h1 {
+        font-size: 1em;
+        font-family: $font-stack;
+    }
+    &:hover {
+        background: darken($light, 10%);
+        color: darken($dark, 10%);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2),
+            inset 0 -3px 0 rgba(0, 0, 0, 0.32);
+    }
+    &:active {
+        transform: translateY(2px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2),
+            inset 0px -1px 0 rgba(0, 0, 0, 0.22);
+    }
+    @media (max-width: $small) {
+        padding: 0em 1em 3px;
+        margin: 0.25em;
+    }
 }
-a {
-    color: #42b983;
+
+.correct:checked + .button-label {
+    background: $green;
+    color: $light;
+    &:hover {
+        background: darken($green, 5%);
+        color: darken($light, 5%);
+    }
+}
+
+.incorrect:checked + .button-label {
+    background: $red;
+    color: $light;
+    &:hover {
+        background: darken($red, 5%);
+        color: darken($light, 5%);
+    }
+}
+
+#maybe-button:checked + .button-label {
+    background: $blue;
+    color: $light;
+    &:hover {
+        background: darken($blue, 5%);
+        color: darken($light, 5%);
+    }
+}
+
+.hidden {
+    display: none;
 }
 </style>
