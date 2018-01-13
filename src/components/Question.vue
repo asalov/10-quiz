@@ -1,5 +1,5 @@
 <template>
-  <article class="question">
+  <article class="question" :class="{ 'hide': inTransition }">
     <header>
       <h3 v-html="question.question" />
     </header>
@@ -13,6 +13,7 @@
             class="hidden"
             :checked="picked === index"
             :value="index"
+            :disabled="question.userChoice"
             v-model="picked">
           <label :for="index" class="button-label">
             <h5 v-html="answer" />
@@ -38,7 +39,8 @@ export default {
     return {
       question: {},
       picked: null,
-      isCorrect: false
+      isCorrect: false,
+      inTransition: false
     };
   },
   watch: {
@@ -47,6 +49,7 @@ export default {
         goToQuestion.call(this, 1);
       }
       this.updateQuestion();
+      this.inTransition = false;
       this.picked = this.question.userChoice ? this.question.userChoice : null;
     },
     picked: function(newVal) {
@@ -59,6 +62,7 @@ export default {
       this.question.userChoice = newVal;
       this.isCorrect = this.isCorrectAnswer(newVal);
       if (returnQuestionsLength() > this.id) {
+        setTimeout(() => (this.inTransition = true), 500);
         setTimeout(() => goToQuestion.call(this, +this.id + 1), 1000);
       }
     }
@@ -103,16 +107,11 @@ h3 {
 }
 
 .button-wrap {
-    position: relative;
     text-align: center;
-    top: 50%;
-    margin-top: -2.5em;
-    @media (max-width: $small) {
-        margin-top: -1.5em;
-    }
 }
 
 .button-label {
+    transition: 0.3s;
     display: inline-block;
     padding: 1em 2em;
     margin: 0.5em;
@@ -122,7 +121,6 @@ h3 {
     background: $light;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2),
         inset 0 -3px 0 rgba(0, 0, 0, 0.22);
-    transition: 0.3s;
     user-select: none;
     h5 {
         font-size: 1em;
@@ -163,21 +161,11 @@ h3 {
     }
 }
 
-#maybe-button:checked + .button-label {
-    background: $blue;
-    color: $light;
-    &:hover {
-        background: darken($blue, 5%);
-        color: darken($light, 5%);
-    }
+.question {
+    transition: opacity 0.5s;
 }
 
-.component-fade-enter-active,
-.component-fade-leave-active {
-    transition: opacity 0.3s ease;
-}
-.component-fade-enter,
-.component-fade-leave-to {
+.hide {
     opacity: 0;
 }
 </style>
