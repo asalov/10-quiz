@@ -97,13 +97,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-$dark: #292929;
-$light: #efefef;
-$red: #d91e18;
-$green: #2ecc71;
-$blue: #4183d7;
-$font-stack: 'Lato', sans-serif;
-$small: 40em;
+@import '../util/vars';
 
 header {
     background: $light;
