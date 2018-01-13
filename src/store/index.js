@@ -8,11 +8,9 @@ const store = {
 
 function setAnswers(questions) {
   store.state.questions = questions.map(item => {
-    if (item.type === 'multiple') {
-      item.answers = item['incorrect_answers'];
-      item.answers.push(item['correct_answer']);
-      questions.answers = shuffle(item.answers);
-    }
+    item.answers = item['incorrect_answers'];
+    item.answers.push(item['correct_answer']);
+    questions.answers = shuffle(item.answers);
     return item;
   });
 }

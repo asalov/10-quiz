@@ -4,17 +4,7 @@
       <h3 v-html="question.question" />
     </header>
     <section>
-      <ul v-if="question.type === 'boolean'">
-        <li>
-          <input type="radio" id="true" value="True" v-model="picked">
-          <label for="true">True</label>
-        </li>
-        <li>
-          <input type="radio" id="false" value="False" v-model="picked">
-          <label for="false">False</label>
-        </li>
-      </ul>
-      <ul v-if="question.type === 'multiple'">
+      <ul>
         <li class="button-wrap" v-for="(answer, index) in question.answers" :key="index">
           <input
             type="radio"
