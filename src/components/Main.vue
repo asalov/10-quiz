@@ -13,7 +13,11 @@
 </template>
 
 <script>
-import store from '@/store';
+import {
+  setQuestionsAction,
+  returnQuestionByIdAction,
+  returnQuestionsLength
+} from '@/store';
 export default {
   data() {
     return {
@@ -21,7 +25,7 @@ export default {
     };
   },
   created() {
-    this.questionsLength = store.returnQuestionsLength();
+    this.questionsLength = returnQuestionsLength();
   },
   methods: {}
 };

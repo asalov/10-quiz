@@ -1,11 +1,38 @@
 <template>
   <article class="question">
-    <header v-html="question.question" />
+    <header>
+      <h3 v-html="question.question" />
+    </header>
+    <section>
+      <ul v-if="question.type === 'boolean'">
+        <li>
+          <input type="radio" id="true" value="True" v-model="picked">
+          <label for="true">True</label>
+        </li>
+        <li>
+          <input type="radio" id="false" value="False" v-model="picked">
+          <label for="false">False</label>
+        </li>
+      </ul>
+      <ul v-if="question.type === 'multiple'">
+        <li v-for="(answer, index) in question.answers" :key="index">
+          <input type="radio" :id="index" :value="index" v-model="picked">
+          <label :for="index">{{ answer }}</label>
+        </li>
+      </ul>
+    </section>
+    <footer>
+      <p>Answer: {{ picked }}</p>
+    </footer>
   </article>
 </template>
 
 <script>
-import store from '@/store';
+import {
+  setQuestionsAction,
+  returnQuestionByIdAction,
+  returnQuestionsLength
+} from '@/store';
 export default {
   props: {
     id: {
@@ -15,12 +42,16 @@ export default {
   },
   data() {
     return {
-      question: {}
+      question: {},
+      picked: null
     };
   },
   watch: {
-    id: function(newVal, oldVal) {
+    id: function() {
       this.updateQuestion();
+    },
+    picked: function(newVal) {
+      console.log();
     }
   },
   created() {
@@ -28,9 +59,8 @@ export default {
   },
   methods: {
     updateQuestion: function() {
-      this.question = store.returnQuestionByIdAction(this.id);
-    },
-    unescape: unescape
+      this.question = returnQuestionByIdAction(this.id);
+    }
   }
 };
 </script>

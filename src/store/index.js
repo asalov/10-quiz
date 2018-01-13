@@ -1,16 +1,30 @@
+import { shuffle } from '@/util/helpers';
+
 const store = {
   state: {
     questions: []
-  },
-  setQuestionsAction(questions) {
-    this.state.questions = questions;
-  },
-  returnQuestionByIdAction(qId) {
-    return this.state.questions[qId];
-  },
-  returnQuestionsLength() {
-    return this.state.questions.length;
   }
 };
 
-export default store;
+function setAnswers(questions) {
+  store.state.questions = questions.map(item => {
+    if (item.type === 'multiple') {
+      item.answers = item['incorrect_answers'];
+      item.answers.push(item['correct_answer']);
+      questions.answers = shuffle(item.answers);
+    }
+    return item;
+  });
+}
+
+const setQuestionsAction = function(questions) {
+  setAnswers(questions);
+};
+const returnQuestionByIdAction = function(qId) {
+  return store.state.questions[qId];
+};
+const returnQuestionsLength = function() {
+  return store.state.questions.length;
+};
+
+export { setQuestionsAction, returnQuestionByIdAction, returnQuestionsLength };
