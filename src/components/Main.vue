@@ -7,6 +7,7 @@
           <router-link :to="{ name: 'Question', params: { id: index }}">{{ index }}</router-link>
         </li>
       </ul>
+      <router-view/>
     </div>
   </div>
 </template>

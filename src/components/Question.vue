@@ -1,6 +1,6 @@
 <template>
   <article class="question">
-    <header>{{ question.question }}</header>
+    <header v-html="question.question" />
   </article>
 </template>
 
@@ -29,7 +29,8 @@ export default {
   methods: {
     updateQuestion: function() {
       this.question = store.returnQuestionByIdAction(this.id);
-    }
+    },
+    unescape: unescape
   }
 };
 </script>

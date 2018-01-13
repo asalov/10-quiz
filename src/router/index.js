@@ -12,14 +12,16 @@ export default new Router({
       path: '/',
       name: 'Main',
       component: Main,
-      beforeEnter: beforeEnterGuard
-    },
-    {
-      path: '/question/:id',
-      name: 'Question',
-      component: Question,
-      props: true,
-      beforeEnter: beforeEnterGuard
+      beforeEnter: beforeEnterGuard,
+      children: [
+        {
+          path: '/question/:id',
+          name: 'Question',
+          component: Question,
+          props: true,
+          beforeEnter: beforeEnterGuard
+        }
+      ]
     }
   ]
 });
