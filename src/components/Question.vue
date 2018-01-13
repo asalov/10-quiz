@@ -9,8 +9,9 @@
           <input
             type="radio"
             :id="index"
-            :class="{ 'correct': correctGuess, 'incorrect': !correctGuess }"
+            :class="{ 'correct': isCorrect, 'incorrect': !isCorrect }"
             class="hidden"
+            :checked="picked === index"
             :value="index"
             v-model="picked">
           <label :for="index" class="button-label">
@@ -37,7 +38,7 @@ export default {
     return {
       question: {},
       picked: null,
-      correctGuess: false
+      isCorrect: false
     };
   },
   watch: {
@@ -46,14 +47,17 @@ export default {
         goToQuestion.call(this, 1);
       }
       this.updateQuestion();
-      this.picked = null;
+      this.picked = this.question.userChoice ? this.question.userChoice : null;
     },
     picked: function(newVal) {
       if (newVal === null) {
         return;
+      } else if (this.question.hasOwnProperty('userChoice')) {
+        this.isCorrect = this.isCorrectAnswer(this.question.userChoice);
+        return;
       }
-      this.correctGuess =
-        this.question.answers[newVal] === this.question['correct_answer'];
+      this.question.userChoice = newVal;
+      this.isCorrect = this.isCorrectAnswer(newVal);
       if (returnQuestionsLength() > this.id) {
         setTimeout(() => goToQuestion.call(this, +this.id + 1), 1000);
       }
@@ -69,6 +73,9 @@ export default {
   methods: {
     updateQuestion: function() {
       this.question = returnQuestionByIdAction(this.id);
+    },
+    isCorrectAnswer: function(id) {
+      return this.question.answers[id] === this.question['correct_answer'];
     }
   }
 };
@@ -163,5 +170,14 @@ h3 {
         background: darken($blue, 5%);
         color: darken($light, 5%);
     }
+}
+
+.component-fade-enter-active,
+.component-fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+.component-fade-enter,
+.component-fade-leave-to {
+    opacity: 0;
 }
 </style>
