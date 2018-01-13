@@ -24,5 +24,15 @@ const returnQuestionByIdAction = function(qId) {
 const returnQuestionsLength = function() {
   return store.state.questions.length;
 };
+const returnCorrectAnswerCount = function() {
+  return store.state.questions.filter(
+    item => item['correct_answer'] === item.answers[item.userChoice]
+  ).length;
+};
 
-export { setQuestionsAction, returnQuestionByIdAction, returnQuestionsLength };
+export {
+  setQuestionsAction,
+  returnQuestionByIdAction,
+  returnQuestionsLength,
+  returnCorrectAnswerCount
+};

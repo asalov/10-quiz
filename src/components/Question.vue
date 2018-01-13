@@ -63,9 +63,17 @@ export default {
       }
       this.question.userChoice = newVal;
       this.isCorrect = this.isCorrectAnswer(newVal);
+      setTimeout(() => (this.inTransition = true), 500);
       if (returnQuestionsLength() > this.id) {
-        setTimeout(() => (this.inTransition = true), 500);
         setTimeout(() => goToQuestion.call(this, +this.id + 1), 1000);
+      } else {
+        setTimeout(
+          () =>
+            this.$router.push({
+              name: 'Result'
+            }),
+          1000
+        );
       }
     }
   },
