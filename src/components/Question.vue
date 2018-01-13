@@ -50,7 +50,9 @@ export default {
       }
       this.updateQuestion();
       this.inTransition = false;
-      this.picked = this.question.userChoice ? this.question.userChoice : null;
+      this.picked = this.question.hasOwnProperty('userChoice')
+        ? this.question.userChoice
+        : null;
     },
     picked: function(newVal) {
       if (newVal === null) {
@@ -111,7 +113,6 @@ h3 {
 }
 
 .button-label {
-    transition: 0.3s;
     display: inline-block;
     padding: 1em 2em;
     margin: 0.5em;
@@ -146,6 +147,7 @@ h3 {
 .correct:checked + .button-label {
     background: $green;
     color: $light;
+    animation: buttonAnimateCorrect 1s;
     &:hover {
         background: darken($green, 5%);
         color: darken($light, 5%);
@@ -155,6 +157,7 @@ h3 {
 .incorrect:checked + .button-label {
     background: $red;
     color: $light;
+    animation: buttonAnimateIncorrect 1s;
     &:hover {
         background: darken($red, 5%);
         color: darken($light, 5%);
@@ -167,5 +170,29 @@ h3 {
 
 .hide {
     opacity: 0;
+}
+
+@keyframes buttonAnimateCorrect {
+    30%,
+    99% {
+        background: $green;
+        color: $light;
+    }
+    100% {
+        color: $dark;
+        background: $light;
+    }
+}
+
+@keyframes buttonAnimateIncorrect {
+    30%,
+    99% {
+        background: $red;
+        color: $light;
+    }
+    100% {
+        color: $dark;
+        background: $light;
+    }
 }
 </style>
