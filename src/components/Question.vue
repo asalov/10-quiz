@@ -13,7 +13,9 @@
             class="hidden"
             :value="index"
             v-model="picked">
-          <label :for="index" class="button-label" v-html="answer" />
+          <label :for="index" class="button-label">
+            <h5 v-html="answer" />
+          </label>
         </li>
       </ul>
     </section>
@@ -47,6 +49,16 @@ export default {
       }
       this.correctGuess =
         this.question.answers[newVal] === this.question['correct_answer'];
+      setTimeout(
+        () =>
+          this.$router.push({
+            name: 'Question',
+            params: {
+              id: this.id + 1
+            }
+          }),
+        1000
+      );
     }
   },
   created() {
@@ -70,6 +82,17 @@ $blue: #4183d7;
 $font-stack: 'Lato', sans-serif;
 $small: 40em;
 
+header {
+    background: $light;
+}
+
+h3 {
+    font-family: Lato;
+    font-weight: 400;
+    color: $dark;
+    padding: 20px;
+}
+
 .button-wrap {
     position: relative;
     text-align: center;
@@ -92,7 +115,7 @@ $small: 40em;
         inset 0 -3px 0 rgba(0, 0, 0, 0.22);
     transition: 0.3s;
     user-select: none;
-    h1 {
+    h5 {
         font-size: 1em;
         font-family: $font-stack;
     }
