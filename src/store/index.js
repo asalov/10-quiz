@@ -7,6 +7,7 @@ const store = {
 };
 
 function setAnswers(questions) {
+  console.log(questions);
   store.state.questions = questions.map(item => {
     item.answers = item['incorrect_answers'];
     item.answers.push(item['correct_answer']);
@@ -19,7 +20,7 @@ const setQuestionsAction = function(questions) {
   setAnswers(questions);
 };
 const returnQuestionByIdAction = function(qId) {
-  return store.state.questions[qId];
+  return store.state.questions[qId - 1];
 };
 const returnQuestionsLength = function() {
   return store.state.questions.length;
