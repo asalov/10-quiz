@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Main from '@/components/Main';
 import Question from '@/components/Question';
-import { storeEmpty, fetchQuestions, beforeEnterGuard } from '@/util/helpers';
+import { beforeEnterGuard } from '@/util/helpers';
 
 Vue.use(Router);
 

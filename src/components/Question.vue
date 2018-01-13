@@ -17,22 +17,18 @@
       <ul v-if="question.type === 'multiple'">
         <li v-for="(answer, index) in question.answers" :key="index">
           <input type="radio" :id="index" :value="index" v-model="picked">
-          <label :for="index">{{ answer }}</label>
+          <label :for="index" v-html="answer" />
         </li>
       </ul>
     </section>
     <footer>
-      <p>Answer: {{ picked }}</p>
+      <p>Answer: {{ correctGuess }}</p>
     </footer>
   </article>
 </template>
 
 <script>
-import {
-  setQuestionsAction,
-  returnQuestionByIdAction,
-  returnQuestionsLength
-} from '@/store';
+import { returnQuestionByIdAction } from '@/store';
 export default {
   props: {
     id: {
@@ -43,7 +39,8 @@ export default {
   data() {
     return {
       question: {},
-      picked: null
+      picked: null,
+      correctGuess: false
     };
   },
   watch: {
@@ -51,7 +48,8 @@ export default {
       this.updateQuestion();
     },
     picked: function(newVal) {
-      console.log();
+      this.correctGuess =
+        this.question.answers[newVal] === this.question['correct_answer'];
     }
   },
   created() {

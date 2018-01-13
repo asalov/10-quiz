@@ -13,11 +13,7 @@
 </template>
 
 <script>
-import {
-  setQuestionsAction,
-  returnQuestionByIdAction,
-  returnQuestionsLength
-} from '@/store';
+import { returnQuestionsLength } from '@/store';
 export default {
   data() {
     return {
