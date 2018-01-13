@@ -22,6 +22,7 @@ export default new Router({
           beforeEnter: beforeEnterGuard
         }
       ]
-    }
+    },
+    { path: '*', redirect: { name: 'Main' } }
   ]
 });
