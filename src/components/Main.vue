@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <div v-if="questionsLength" class="content">
+    <div class="content">
       <h2>Questions</h2>
       <ul id="progress-bar">
         <li v-for="index in questionsLength" :key="index">
@@ -43,13 +43,5 @@ li {
 }
 a {
     color: #42b983;
-}
-html,
-body {
-    height: 100%;
-}
-
-html {
-    background: #444;
 }
 </style>

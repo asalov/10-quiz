@@ -42,11 +42,11 @@ export default {
   },
   watch: {
     id: function() {
-      this.updateQuestion();
-      this.picked = null;
-      if (!+this.id || !returnQuestionsLength() > this.id) {
+      if (!+this.id || returnQuestionsLength() < this.id) {
         goToQuestion.call(this, 1);
       }
+      this.updateQuestion();
+      this.picked = null;
     },
     picked: function(newVal) {
       if (newVal === null) {
@@ -55,12 +55,16 @@ export default {
       this.correctGuess =
         this.question.answers[newVal] === this.question['correct_answer'];
       if (returnQuestionsLength() > this.id) {
-        setTimeout(() => goToQuestion.call(this, this.id + 1), 1000);
+        setTimeout(() => goToQuestion.call(this, +this.id + 1), 1000);
       }
     }
   },
   created() {
-    this.updateQuestion();
+    if (returnQuestionsLength() < +this.id) {
+      goToQuestion.call(this, 1);
+    } else {
+      this.updateQuestion();
+    }
   },
   methods: {
     updateQuestion: function() {
@@ -159,9 +163,5 @@ h3 {
         background: darken($blue, 5%);
         color: darken($light, 5%);
     }
-}
-
-.hidden {
-    display: none;
 }
 </style>

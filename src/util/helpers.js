@@ -5,19 +5,20 @@ import {
 } from '@/store';
 
 const storeEmpty = () => returnQuestionsLength() === 0;
-const fetchQuestions = next => {
-  fetch('https://opentdb.com/api.php?amount=10&difficulty=easy')
-    .then(response => {
+const fetchQuestions = () => {
+  return fetch('https://opentdb.com/api.php?amount=10&difficulty=easy').then(
+    response => {
       return response.json();
-    })
-    .then(jsonRes => {
-      setQuestionsAction(jsonRes.results);
-      next();
-    });
+    }
+  );
 };
 const beforeEnterGuard = (to, from, next) => {
   if (storeEmpty()) {
-    fetchQuestions(next);
+    fetchQuestions().then(jsonRes => {
+      setQuestionsAction(jsonRes.results);
+      document.getElementsByClassName('spinner')[0].classList.add('hidden');
+      next();
+    });
   } else {
     next();
   }
