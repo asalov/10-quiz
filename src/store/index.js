@@ -17,6 +17,8 @@ function setAnswers(questions) {
 }
 
 const setQuestionsAction = function(questions) {
+  // reset, in case of user restart of quiz
+  store.state.currentlyActive = 1;
   setAnswers(questions);
 };
 const returnQuestionByIdAction = function(qId) {

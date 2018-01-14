@@ -21,6 +21,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    margin: 0 auto;
     margin-top: 60px;
     max-width: 800px;
 }
@@ -37,6 +38,7 @@ export default {
     display: inline-block;
     padding: 1em 2em;
     margin: 0.5em;
+    margin-top: 50px;
     cursor: pointer;
     color: $light;
     border-radius: 0.25em;
@@ -54,10 +56,6 @@ export default {
         transform: translateY(2px);
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2),
             inset 0px -1px 0 rgba(0, 0, 0, 0.22);
-    }
-    @media (max-width: $small) {
-        padding: 0em 1em 3px;
-        margin: 0.25em;
     }
 }
 </style>

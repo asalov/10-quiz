@@ -9,6 +9,7 @@
         <div class="bar" :style="{ 'width': correctAnswerCount * 10 + '%' }"/>
       </div>
     </div>
+    <router-link :to="{ name: 'Question', params: { id: 1, reload: true } }" class="cta">Go again</router-link>
   </div>
 </template>
 

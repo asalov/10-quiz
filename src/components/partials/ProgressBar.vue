@@ -34,6 +34,7 @@ export default {
     width: 100%;
     display: inline-flex;
     padding: 0;
+    margin-bottom: 20px;
     justify-content: space-between;
     li {
         flex-basis: 8%;
@@ -54,6 +55,11 @@ export default {
                     left: -26%;
                     top: 50%;
                 }
+            }
+        }
+        @media screen and (max-width: 420px) {
+            span {
+                visibility: hidden;
             }
         }
     }

@@ -4,6 +4,7 @@
     <article class="question" :class="{ 'hide': inTransition }">
       <header>
         <h3 v-html="question.question" />
+        <h6>Category: <span v-html="question.category"/></h6>
       </header>
       <section>
         <ul>
@@ -123,13 +124,19 @@ export default {
 
 header {
     background: $blue;
+    padding: 20px;
 }
 
-h3 {
+h3,
+h6 {
     font-family: Lato;
     font-weight: 400;
     color: $light;
-    padding: 20px;
+}
+
+ul {
+    padding: 0;
+    list-style-type: none;
 }
 
 .button-wrap {
@@ -137,9 +144,10 @@ h3 {
 }
 
 .button-label {
+    width: 100%;
     display: inline-block;
-    padding: 1em 2em;
-    margin: 0.5em;
+    // padding: 1em 2em;
+    margin: 0.5em 0;
     cursor: pointer;
     color: $dark;
     border-radius: 0.25em;
@@ -163,8 +171,8 @@ h3 {
             inset 0px -1px 0 rgba(0, 0, 0, 0.22);
     }
     @media (max-width: $small) {
-        padding: 0em 1em 3px;
-        margin: 0.25em;
+        // padding: 0em 1em 3px;
+        margin: 0.25em 0;
     }
 }
 

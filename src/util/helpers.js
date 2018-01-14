@@ -37,7 +37,19 @@ const beforeAccessResult = (to, from, next) => {
 };
 
 const beforeAccessQuestion = (to, from, next) => {
-  if (+to.params.id !== returnCurrentlyActiveQuestionId()) {
+  if (to.params.reload) {
+    document.getElementById('app').classList.add('hidden');
+    document.getElementsByClassName('spinner')[0].classList.remove('hidden');
+    fetchQuestions().then(jsonRes => {
+      setQuestionsAction(jsonRes.results);
+      document.getElementsByClassName('spinner')[0].classList.add('hidden');
+      setTimeout(
+        () => document.getElementById('app').classList.remove('hidden'),
+        500
+      );
+      next();
+    });
+  } else if (+to.params.id !== returnCurrentlyActiveQuestionId()) {
     next({
       name: 'Question',
       params: { id: returnCurrentlyActiveQuestionId() }
