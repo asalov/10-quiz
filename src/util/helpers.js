@@ -1,7 +1,8 @@
 import {
   setQuestionsAction,
   returnQuestionByIdAction,
-  returnQuestionsLength
+  returnQuestionsLength,
+  returnCurrentlyActiveQuestionId
 } from '@/store';
 
 const storeEmpty = () => returnQuestionsLength() === 0;
@@ -12,12 +13,34 @@ const fetchQuestions = () => {
     })
     .catch(() => Location.reload());
 };
-const beforeEnterGuard = (to, from, next) => {
+const globalBeforeEnterGuard = (to, from, next) => {
   if (storeEmpty()) {
     fetchQuestions().then(jsonRes => {
       setQuestionsAction(jsonRes.results);
       document.getElementsByClassName('spinner')[0].classList.add('hidden');
       next();
+    });
+  } else {
+    next();
+  }
+};
+
+const beforeAccessResult = (to, from, next) => {
+  if (returnQuestionsLength() !== returnCurrentlyActiveQuestionId()) {
+    next({
+      name: 'Question',
+      params: { id: returnCurrentlyActiveQuestionId() }
+    });
+  } else {
+    next();
+  }
+};
+
+const beforeAccessQuestion = (to, from, next) => {
+  if (+to.params.id !== returnCurrentlyActiveQuestionId()) {
+    next({
+      name: 'Question',
+      params: { id: returnCurrentlyActiveQuestionId() }
     });
   } else {
     next();
@@ -54,4 +77,12 @@ const goToQuestion = function(idToGo) {
   });
 };
 
-export { storeEmpty, fetchQuestions, beforeEnterGuard, shuffle, goToQuestion };
+export {
+  storeEmpty,
+  fetchQuestions,
+  globalBeforeEnterGuard,
+  shuffle,
+  goToQuestion,
+  beforeAccessQuestion,
+  beforeAccessResult
+};

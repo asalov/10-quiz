@@ -28,7 +28,8 @@
 import {
   returnQuestionByIdAction,
   returnQuestionsLength,
-  handleUserSelection
+  handleUserSelection,
+  returnCurrentlyActiveQuestionId
 } from '@/store';
 import { goToQuestion } from '@/util/helpers';
 
@@ -49,8 +50,12 @@ export default {
   },
   watch: {
     id: function() {
-      if (!+this.id || returnQuestionsLength() < this.id) {
-        goToQuestion.call(this, 1);
+      if (
+        !+this.id ||
+        returnQuestionsLength() < this.id ||
+        +this.id !== returnCurrentlyActiveQuestionId()
+      ) {
+        goToQuestion.call(this, returnCurrentlyActiveQuestionId());
       }
       this.updateQuestion();
       this.inTransition = false;
