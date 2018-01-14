@@ -29,7 +29,7 @@ module.exports = {
     filename: '[name].js',
     publicPath:
       process.env.NODE_ENV === 'production'
-        ? config.build.assetsPublicPath
+        ? process.env.subfolder ? '/10quiz' : '' + config.build.assetsPublicPath
         : config.dev.assetsPublicPath
   },
   resolve: {
