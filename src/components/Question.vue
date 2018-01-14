@@ -58,6 +58,14 @@ export default {
         goToQuestion.call(this, returnCurrentlyActiveQuestionId());
       }
       this.updateQuestion();
+      if (
+        returnCurrentlyActiveQuestionId() === 10 &&
+        this.question.hasOwnProperty('userChoice')
+      ) {
+        this.$router.push({
+          name: 'Result'
+        });
+      }
       this.inTransition = false;
       this.picked = this.question.hasOwnProperty('userChoice')
         ? this.question.userChoice
@@ -158,7 +166,7 @@ h3 {
 .correct:checked + .button-label {
     background: $green;
     color: $light;
-    animation: buttonAnimateCorrect 1s;
+    transition: 0.3s;
     &:hover {
         background: darken($green, 5%);
         color: darken($light, 5%);
@@ -168,7 +176,7 @@ h3 {
 .incorrect:checked + .button-label {
     background: $red;
     color: $light;
-    animation: buttonAnimateIncorrect 1s;
+    transition: 0.3s;
     &:hover {
         background: darken($red, 5%);
         color: darken($light, 5%);
@@ -181,29 +189,5 @@ h3 {
 
 .hide {
     opacity: 0;
-}
-
-@keyframes buttonAnimateCorrect {
-    30%,
-    99% {
-        background: $green;
-        color: $light;
-    }
-    100% {
-        color: $dark;
-        background: $light;
-    }
-}
-
-@keyframes buttonAnimateIncorrect {
-    30%,
-    99% {
-        background: $red;
-        color: $light;
-    }
-    100% {
-        color: $dark;
-        background: $light;
-    }
 }
 </style>

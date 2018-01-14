@@ -24,14 +24,14 @@ const router = new Router({
           component: Question,
           props: true,
           beforeEnter: beforeAccessQuestion
-        },
-        {
-          path: '/result',
-          name: 'Result',
-          component: Result,
-          beforeEnter: beforeAccessResult
         }
       ]
+    },
+    {
+      path: '/result',
+      name: 'Result',
+      component: Result,
+      beforeEnter: beforeAccessResult
     },
     { path: '*', redirect: { name: 'Main' } }
   ]
