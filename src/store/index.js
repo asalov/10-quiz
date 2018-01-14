@@ -2,7 +2,8 @@ import { shuffle } from '@/util/helpers';
 
 const store = {
   state: {
-    questions: []
+    questions: [],
+    currentlyActive: 1
   }
 };
 
@@ -29,10 +30,21 @@ const returnCorrectAnswerCount = function() {
     item => item['correct_answer'] === item.answers[item.userChoice]
   ).length;
 };
+const handleUserSelection = function(questionId, answerId) {
+  if (returnQuestionsLength() > questionId) {
+    store.state.currentlyActive = +questionId + 1;
+  }
+  returnQuestionByIdAction(questionId)['userChoice'] = answerId;
+};
+const returnCurrentlyActiveQuestionId = function() {
+  return store.state.currentlyActive;
+};
 
 export {
   setQuestionsAction,
   returnQuestionByIdAction,
   returnQuestionsLength,
-  returnCorrectAnswerCount
+  returnCorrectAnswerCount,
+  handleUserSelection,
+  returnCurrentlyActiveQuestionId
 };

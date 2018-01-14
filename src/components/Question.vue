@@ -25,7 +25,11 @@
 </template>
 
 <script>
-import { returnQuestionByIdAction, returnQuestionsLength } from '@/store';
+import {
+  returnQuestionByIdAction,
+  returnQuestionsLength,
+  handleUserSelection
+} from '@/store';
 import { goToQuestion } from '@/util/helpers';
 
 export default {
@@ -61,7 +65,7 @@ export default {
         this.isCorrect = this.isCorrectAnswer(this.question.userChoice);
         return;
       }
-      this.question.userChoice = newVal;
+      handleUserSelection(this.id, newVal);
       this.isCorrect = this.isCorrectAnswer(newVal);
       setTimeout(() => (this.inTransition = true), 500);
       if (returnQuestionsLength() > this.id) {

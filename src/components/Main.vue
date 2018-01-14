@@ -2,7 +2,7 @@
   <div class="post">
     <div class="content">
       <ul class="progress-bar">
-        <li v-for="index in questionsLength" :key="index">
+        <li v-for="index in questionsLength" :class="{ 'passed': currentlyActive() >= index }" :key="index">
           <span>{{ index }}</span>
         </li>
       </ul>
@@ -14,7 +14,10 @@
 </template>
 
 <script>
-import { returnQuestionsLength } from '@/store';
+import {
+  returnQuestionsLength,
+  returnCurrentlyActiveQuestionId
+} from '@/store';
 export default {
   data() {
     return {
@@ -24,7 +27,9 @@ export default {
   created() {
     this.questionsLength = returnQuestionsLength();
   },
-  methods: {}
+  methods: {
+    currentlyActive: returnCurrentlyActiveQuestionId
+  }
 };
 </script>
 
@@ -44,8 +49,11 @@ h2 {
     li {
         flex-basis: 8%;
         background-color: $light;
-        // display: inline-block;
-        // margin: 0 10px;
+        transition: 0.3s;
+        &.passed {
+            background-color: $blue;
+            color: $light;
+        }
     }
 }
 </style>
