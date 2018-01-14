@@ -1,27 +1,30 @@
 <template>
-  <article class="question" :class="{ 'hide': inTransition }">
-    <header>
-      <h3 v-html="question.question" />
-    </header>
-    <section>
-      <ul>
-        <li class="button-wrap" v-for="(answer, index) in question.answers" :key="index">
-          <input
-            type="radio"
-            :id="index"
-            :class="{ 'correct': isCorrect, 'incorrect': !isCorrect }"
-            class="hidden"
-            :checked="picked === index"
-            :value="index"
-            :disabled="question.userChoice"
-            v-model="picked">
-          <label :for="index" class="button-label">
-            <h5 v-html="answer" />
-          </label>
-        </li>
-      </ul>
-    </section>
-  </article>
+  <section>
+    <progress-bar :active-id="id" />
+    <article class="question" :class="{ 'hide': inTransition }">
+      <header>
+        <h3 v-html="question.question" />
+      </header>
+      <section>
+        <ul>
+          <li class="button-wrap" v-for="(answer, index) in question.answers" :key="index">
+            <input
+              type="radio"
+              :id="index"
+              :class="{ 'correct': isCorrect, 'incorrect': !isCorrect }"
+              class="hidden"
+              :checked="picked === index"
+              :value="index"
+              :disabled="question.userChoice"
+              v-model="picked">
+            <label :for="index" class="button-label">
+              <h5 v-html="answer" />
+            </label>
+          </li>
+        </ul>
+      </section>
+    </article>
+  </section>
 </template>
 
 <script>
@@ -32,8 +35,12 @@ import {
   returnCurrentlyActiveQuestionId
 } from '@/store';
 import { goToQuestion } from '@/util/helpers';
+import ProgressBar from './partials/ProgressBar';
 
 export default {
+  components: {
+    'progress-bar': ProgressBar
+  },
   props: {
     id: {
       type: Number | String,
@@ -84,13 +91,9 @@ export default {
       if (returnQuestionsLength() > this.id) {
         setTimeout(() => goToQuestion.call(this, +this.id + 1), 1000);
       } else {
-        setTimeout(
-          () =>
-            this.$router.push({
-              name: 'Result'
-            }),
-          1000
-        );
+        this.$router.push({
+          name: 'Result'
+        });
       }
     }
   },

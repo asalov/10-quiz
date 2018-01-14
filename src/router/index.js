@@ -16,16 +16,14 @@ const router = new Router({
     {
       path: '/',
       name: 'Main',
-      component: Main,
-      children: [
-        {
-          path: '/question/:id',
-          name: 'Question',
-          component: Question,
-          props: true,
-          beforeEnter: beforeAccessQuestion
-        }
-      ]
+      component: Main
+    },
+    {
+      path: '/question/:id',
+      name: 'Question',
+      component: Question,
+      props: true,
+      beforeEnter: beforeAccessQuestion
     },
     {
       path: '/result',
