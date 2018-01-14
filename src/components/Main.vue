@@ -48,11 +48,24 @@ h2 {
     justify-content: space-between;
     li {
         flex-basis: 8%;
-        background-color: $light;
+        background-color: $dark;
+        color: $light;
         transition: 0.3s;
         &.passed {
-            background-color: $blue;
-            color: $light;
+            background-color: $light;
+            color: $dark;
+            position: relative;
+            &:not(:first-child) {
+                &:before {
+                    content: '';
+                    width: 25%;
+                    height: 1px;
+                    background-color: $light;
+                    position: absolute;
+                    left: -26%;
+                    top: 50%;
+                }
+            }
         }
     }
 }
