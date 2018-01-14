@@ -91,9 +91,11 @@ export default {
       if (returnQuestionsLength() > this.id) {
         setTimeout(() => goToQuestion.call(this, +this.id + 1), 1000);
       } else {
-        this.$router.push({
-          name: 'Result'
-        });
+        setTimeout(() => {
+          this.$router.push({
+            name: 'Result'
+          });
+        }, 500);
       }
     }
   },

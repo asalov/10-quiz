@@ -12,7 +12,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import './util/vars';
+
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -20,6 +22,7 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+    max-width: 800px;
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -28,5 +31,33 @@ export default {
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}
+.cta {
+    text-decoration: none;
+    display: inline-block;
+    padding: 1em 2em;
+    margin: 0.5em;
+    cursor: pointer;
+    color: $light;
+    border-radius: 0.25em;
+    background: $blue;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+    user-select: none;
+    &:hover {
+        background: darken($blue, 10%);
+        color: darken($light, 10%);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2),
+            inset 0 -3px 0 rgba(0, 0, 0, 0.32);
+    }
+    &:active {
+        transform: translateY(2px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2),
+            inset 0px -1px 0 rgba(0, 0, 0, 0.22);
+    }
+    @media (max-width: $small) {
+        padding: 0em 1em 3px;
+        margin: 0.25em;
+    }
 }
 </style>
