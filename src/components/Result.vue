@@ -1,8 +1,8 @@
 <template>
   <div class="post">
     <div class="content">
-      <h2>Result</h2>
-      {{ correctAnswerCount }} out of {{ questionsLength }}
+      <h2>Correct answers</h2>
+      <h3>{{ correctAnswerCount }} out of {{ questionsLength }}</h3>
     </div>
     <div class="container">
       <div class="progress">
@@ -23,7 +23,10 @@ export default {
   },
   created() {
     this.questionsLength = returnQuestionsLength();
-    this.correctAnswerCount = returnCorrectAnswerCount();
+    setTimeout(
+      () => (this.correctAnswerCount = returnCorrectAnswerCount()),
+      200
+    );
   },
   methods: {}
 };
@@ -33,6 +36,11 @@ export default {
 <style lang="scss" scoped>
 @import '../util/vars';
 
+h2,
+h3 {
+    font-family: Lato;
+    color: $light;
+}
 .container {
     width: 300px;
     margin: 30px auto 0;
@@ -41,13 +49,11 @@ export default {
 .progress {
     overflow: hidden;
     height: 18px;
-
     background-color: $light;
 }
 
 .progress .bar {
     height: 18px;
-
     background-color: $green;
     transition: width 0.6s ease;
 }

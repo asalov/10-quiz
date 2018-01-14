@@ -1,10 +1,9 @@
 <template>
   <div class="post">
     <div class="content">
-      <h2>Questions</h2>
-      <ul id="progress-bar">
+      <ul class="progress-bar">
         <li v-for="index in questionsLength" :key="index">
-          <router-link :to="{ name: 'Question', params: { id: index }}">{{ index }}</router-link>
+          <span>{{ index }}</span>
         </li>
       </ul>
       <div>
@@ -30,20 +29,23 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style lang="scss">
+@import '../util/vars';
 h1,
 h2 {
     font-weight: normal;
 }
-ul {
+.progress-bar {
     list-style-type: none;
+    width: 100%;
+    display: inline-flex;
     padding: 0;
-}
-li {
-    display: inline-block;
-    margin: 0 10px;
-}
-a {
-    color: #42b983;
+    justify-content: space-between;
+    li {
+        flex-basis: 8%;
+        background-color: $light;
+        // display: inline-block;
+        // margin: 0 10px;
+    }
 }
 </style>

@@ -100,13 +100,13 @@ export default {
 @import '../util/vars';
 
 header {
-    background: $light;
+    background: $blue;
 }
 
 h3 {
     font-family: Lato;
     font-weight: 400;
-    color: $dark;
+    color: $light;
     padding: 20px;
 }
 
