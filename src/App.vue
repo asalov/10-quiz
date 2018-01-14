@@ -22,8 +22,10 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin: 0 auto;
-    margin-top: 60px;
     max-width: 800px;
+    @media screen and (min-width: $small) {
+        margin-top: 60px;
+    }
 }
 .fade-enter-active,
 .fade-leave-active {
