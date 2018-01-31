@@ -2,15 +2,20 @@
   <section>
     <h1>10 Quiz</h1>
     <h3>Answer questions from different areas, enrich your common knowledge and have fun!</h3>
-    <router-link :to="{ name: 'Question', params: { id: 1 } }" class="cta">I am ready!</router-link>
+    <router-link :to="{ name: 'Question', params: { id: currentQuestion } }" class="cta">{{ linkText }}</router-link>
   </section>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
-  }
+  computed: {
+    currentQuestion() {
+      return this.$store.getters.currentlyActiveId;
+    },
+    linkText() {
+      return this.currentQuestion > 1 ? 'Resume progress' : 'I am ready!';
+    },
+  },
 };
 </script>
 
@@ -19,11 +24,15 @@ export default {
 @import '../util/vars';
 h1,
 h3 {
-    font-weight: 400;
-    font-family: Lato;
-    color: $light;
+  font-family: Lato;
+  color: $light;
 }
+
 h1 {
-    font-weight: 900;
+  font-weight: 900;
+}
+
+h3 {
+  font-weight: 400;
 }
 </style>
